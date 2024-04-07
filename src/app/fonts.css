@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "TT Hoves Pro Trial Variable Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("TT Hoves Pro Trial Variable Regular"),
+    url("./fonts/TT_Hoves_Pro_Trial_Variable.woff") format("woff");
+}
