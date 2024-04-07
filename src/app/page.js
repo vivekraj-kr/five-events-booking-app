@@ -178,6 +178,10 @@ export default function Home() {
     }
   ];
 
+  const onSelectZone = (zone) => {
+    console.log(zone?.id);
+  };
+
   return (
     <StyledContainer>
       <StyledTitle>What area of the club would you prefer? </StyledTitle>
@@ -211,6 +215,7 @@ export default function Home() {
                 left={zone?.x}
                 top={zone?.y}
                 key={zone?.id}
+                onClick={() => onSelectZone(zone)}
               ></StyledAnchor>
             );
           })}
