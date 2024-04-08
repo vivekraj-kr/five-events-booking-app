@@ -63,6 +63,18 @@ const StyledCarousel = styled.div`
 
 const StyledCarouselItem = styled.div``;
 
+const StyledButtonContainer = styled.div``;
+const StyledButton = styled.button`
+  background-color: #ff003d;
+  min-width: 327px;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #f1f1f1;
+`;
+
 const BookZoneModal = ({ isModalOpen, closeModal, selectedZone }) => {
   return (
     <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -117,6 +129,9 @@ const BookZoneModal = ({ isModalOpen, closeModal, selectedZone }) => {
               ></Image>
             </StyledCarouselItem>
           </StyledCarousel>
+          <StyledButtonContainer>
+            <StyledButton>SELECT THIS ZONE</StyledButton>
+          </StyledButtonContainer>
         </StyledBookZoneContent>
       </StyledBookZoneModal>
     </Modal>

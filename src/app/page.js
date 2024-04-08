@@ -98,6 +98,18 @@ const StyledAnchor = styled.a`
   }
 `;
 
+const StyledButtonContainer = styled.div``;
+const StyledButton = styled.button`
+  background-color: #ff003d;
+  min-width: 327px;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #f1f1f1;
+`;
+
 export default function Home() {
   const zones = [
     {
@@ -233,6 +245,9 @@ export default function Home() {
           })}
         </StyledLayoutWarpper>
       </StyledLayoutContainer>
+      <StyledButtonContainer>
+        <StyledButton>SELECT THIS ZONE</StyledButton>
+      </StyledButtonContainer>
       <BookZoneModal
         isModalOpen={isModalOpen}
         closeModal={closeModal}
