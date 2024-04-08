@@ -2,6 +2,8 @@
 
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
+import { useState } from "react";
+import BookZoneModal from "./components/BookZoneModal";
 
 const StyledContainer = styled.main`
   padding: 25px 20px;
@@ -50,7 +52,6 @@ const StyledLayoutContainer = styled.div`
   overflow: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
-  text-align: center;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -178,8 +179,20 @@ export default function Home() {
     }
   ];
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedZone, setSelectedZone] = useState(zones[0]);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const onSelectZone = (zone) => {
-    console.log(zone?.id);
+    setSelectedZone(zone);
+    openModal();
   };
 
   return (
@@ -207,7 +220,6 @@ export default function Home() {
             width={735}
             height={416}
             alt="Club layout"
-            id="myImage"
           ></Image>
           {zones?.map((zone) => {
             return (
@@ -221,6 +233,11 @@ export default function Home() {
           })}
         </StyledLayoutWarpper>
       </StyledLayoutContainer>
+      <BookZoneModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        selectedZone={selectedZone}
+      />
     </StyledContainer>
   );
 }
