@@ -5,6 +5,18 @@ import Image from "next/image";
 import { useState } from "react";
 import BookZoneModal from "./components/BookZoneModal";
 
+const pulse = keyframes`
+   from {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+`;
+
 const StyledContainer = styled.main`
   padding: 25px 20px;
 `;
@@ -33,14 +45,26 @@ const StyledLegendIndicator = styled.div`
   gap: 10px;
 `;
 
-const StyledLegendIndicatorIcon = styled.div`
-  height: 15px;
-  width: 15px;
-  border-radius: 15px;
-  border: solid 1px #fff;
-  font-size: 8px;
-  padding: 2px 0px;
-  text-align: center;
+const StyledLegendIndicatorIcon = styled.a`
+  position: relative;
+  height: 8px;
+  width: 8px;
+  border-radius: 5px;
+  background-color: #03ff82;
+  background-color: ${(props) => (props?.available ? "#03ff82" : "#C21F3D")};
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -6px;
+    top: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: ${(props) => (props?.available ? "#03ff82" : "#C21F3D")};
+    animation: ${pulse} 1.5s infinite ease-in-out;
+  }
 `;
 
 const StyledLegendIndicatorLabel = styled.label``;
@@ -63,39 +87,10 @@ const StyledLayoutWarpper = styled.div`
   position: relative;
 `;
 
-const pulse = keyframes`
-   from {
-    transform: scale(0.5);
-    opacity: 1;
-  }
-
-  to {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-`;
-
-const StyledAnchor = styled.a`
+const StyledAnchor = styled(StyledLegendIndicatorIcon)`
   position: absolute;
   left: ${(props) => `${props.left}px`};
   top: ${(props) => `${props.top}px`};
-  height: 8px;
-  width: 8px;
-  border-radius: 5px;
-  background-color: #03ff82;
-
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: -6px;
-    top: -6px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #03ff82;
-    animation: ${pulse} 1.5s infinite ease-in-out;
-  }
 `;
 
 const StyledButtonContainer = styled.div``;
@@ -188,6 +183,13 @@ export default function Home() {
       id: 11,
       name: "K",
       available: true
+    },
+    {
+      x: 165.5,
+      y: 223,
+      id: 12,
+      name: "K",
+      available: false
     }
   ];
 
@@ -212,22 +214,23 @@ export default function Home() {
       <StyledTitle>What area of the club would you prefer? </StyledTitle>
       <StyledLegend>
         <StyledLegendIndicator>
-          <StyledLegendIndicatorIcon>1</StyledLegendIndicatorIcon>
+          <StyledLegendIndicatorIcon available={true} />
           <StyledLegendIndicatorLabel>Available</StyledLegendIndicatorLabel>
         </StyledLegendIndicator>
 
         <StyledLegendIndicator>
-          <StyledLegendIndicatorIcon>1</StyledLegendIndicatorIcon>
+          <StyledLegendIndicatorIcon />
           <StyledLegendIndicatorLabel>Unavailable</StyledLegendIndicatorLabel>
         </StyledLegendIndicator>
         <StyledLegendIndicator>
-          <StyledLegendIndicatorIcon>DJ</StyledLegendIndicatorIcon>
+          <StyledLegendIndicatorIcon />
           <StyledLegendIndicatorLabel>DJ BOOTH</StyledLegendIndicatorLabel>
         </StyledLegendIndicator>
       </StyledLegend>
       <StyledLayoutContainer>
         <StyledLayoutWarpper>
           <Image
+            id="club-layout"
             src="/images/club_layout.png"
             width={735}
             height={416}
@@ -239,6 +242,7 @@ export default function Home() {
                 left={zone?.x}
                 top={zone?.y}
                 key={zone?.id}
+                available={zone?.available}
                 onClick={() => onSelectZone(zone)}
               ></StyledAnchor>
             );
