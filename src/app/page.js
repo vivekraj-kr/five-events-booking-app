@@ -1,6 +1,6 @@
 "use client";
 
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import Image from "next/image";
 import { useState } from "react";
 import BookZoneModal from "./components/BookZoneModal";
@@ -50,8 +50,27 @@ const StyledLegendIndicatorIcon = styled.a`
   height: 8px;
   width: 8px;
   border-radius: 5px;
-  background-color: #03ff82;
-  background-color: ${(props) => (props?.available ? "#03ff82" : "#C21F3D")};
+  z-index: 1;
+
+  ${(props) =>
+    props.name !== "DJ" &&
+    css`
+      background-color: ${(props) =>
+        props?.available ? "#03ff82" : "#C21F3D"};
+    `}
+
+  ${(props) =>
+    props.name === "DJ" &&
+    css`
+      background-color: #e49603;
+      color: #ffffff;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      font-size: 8px;
+      border: solid 1px #fff;
+      padding: 2px;
+    `}
 
   &::after {
     content: "";
@@ -62,8 +81,42 @@ const StyledLegendIndicatorIcon = styled.a`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: ${(props) => (props?.available ? "#03ff82" : "#C21F3D")};
-    animation: ${pulse} 1.5s infinite ease-in-out;
+    z-index: -1;
+
+    ${(props) =>
+      props.available &&
+      css`
+        animation: ${pulse} 1.5s infinite ease-in-out;
+      `}
+
+    ${(props) =>
+      !props.available &&
+      props.name !== "DJ" &&
+      css`
+        opacity: 0.5;
+      `}
+
+    ${(props) =>
+      props.name !== "DJ" &&
+      css`
+        background-color: ${(props) =>
+          props?.available ? "#03ff82" : "#C21F3D"};
+      `}
+
+    ${(props) =>
+      props.name === "DJ" &&
+      css`
+        z-index: -1;
+        height: 24px;
+        width: 24px;
+        left: -5px;
+        top: -5px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(228, 150, 3, 0.65) 0%,
+          rgba(0, 0, 0, 0) 100%
+        );
+      `}
   }
 `;
 
@@ -93,7 +146,10 @@ const StyledAnchor = styled(StyledLegendIndicatorIcon)`
   top: ${(props) => `${props.top}px`};
 `;
 
-const StyledButtonContainer = styled.div``;
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 const StyledButton = styled.button`
   background-color: #ff003d;
   min-width: 327px;
@@ -190,6 +246,13 @@ export default function Home() {
       id: 12,
       name: "K",
       available: false
+    },
+    {
+      x: 379,
+      y: 198,
+      id: 13,
+      name: "DJ",
+      available: false
     }
   ];
 
@@ -205,8 +268,10 @@ export default function Home() {
   };
 
   const onSelectZone = (zone) => {
-    setSelectedZone(zone);
-    openModal();
+    if (zone?.available) {
+      setSelectedZone(zone);
+      openModal();
+    }
   };
 
   return (
@@ -223,7 +288,7 @@ export default function Home() {
           <StyledLegendIndicatorLabel>Unavailable</StyledLegendIndicatorLabel>
         </StyledLegendIndicator>
         <StyledLegendIndicator>
-          <StyledLegendIndicatorIcon />
+          <StyledLegendIndicatorIcon name={"DJ"}>DJ</StyledLegendIndicatorIcon>
           <StyledLegendIndicatorLabel>DJ BOOTH</StyledLegendIndicatorLabel>
         </StyledLegendIndicator>
       </StyledLegend>
@@ -244,7 +309,10 @@ export default function Home() {
                 key={zone?.id}
                 available={zone?.available}
                 onClick={() => onSelectZone(zone)}
-              ></StyledAnchor>
+                name={zone?.name}
+              >
+                {zone?.name === "DJ" && "DJ"}
+              </StyledAnchor>
             );
           })}
         </StyledLayoutWarpper>

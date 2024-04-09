@@ -11,13 +11,21 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9;
 `;
 
 const ModalContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   background-color: var(--background-color);
   border-radius: 8px;
+`;
+
+const ModalClose = styled.a`
+  position: absolute;
+  right: 15px;
+  top: 15px;
 `;
 
 const Modal = ({ isOpen, onClose, children }) => {
@@ -28,7 +36,7 @@ const Modal = ({ isOpen, onClose, children }) => {
   return (
     <ModalOverlay onClick={onClose}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose}>Close</button>
+        <ModalClose onClick={onClose}>X</ModalClose>
         {children}
       </ModalContainer>
     </ModalOverlay>

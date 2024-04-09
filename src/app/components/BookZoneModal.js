@@ -7,23 +7,46 @@ const StyledBookZoneModal = styled.div`
   height: 100%;
   width: 100%;
   padding: 20px;
-
-  //background-image: url(images/zone_bg.png);
+  background-image: linear-gradient(
+      to bottom,
+      #1d1d1d 37%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url(images/zone_bg.png);
   background-size: cover;
 `;
 
-const StyledBookZoneContent = styled.div`
-  background: linear-gradient(
-    180deg,
-    #1d1d1d 0%,
-    #1d1d1d 45.85%,
-    #1d1d1d 45.85%,
-    #1d1d1d 100%
-  );
+const StyledBookZoneContent = styled.div``;
+
+const StyledBookZoneTitle = styled.h2`
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
 `;
 
-const StyledBookZoneTitle = styled.h2``;
-const StyledBookZoneSubtitle = styled.p``;
+const StyledBookZoneId = styled.span`
+  height: 24px;
+  width: 24px;
+  background-color: #ff003d;
+  transform: rotate(45deg);
+  text-align: center;
+  padding: 4px;
+  border-radius: 4px;
+
+  span {
+    display: block;
+    transform: rotate(-45deg);
+    font-size: 14px;
+  }
+`;
+
+const StyledBookZoneSubtitle = styled.p`
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15.5px;
+  text-align: center;
+`;
 
 const StyledLabel = styled.span`
   display: block;
@@ -51,6 +74,7 @@ const StyledLabelDivider = styled.div`
 const StyledCarousel = styled.div`
   margin: 30px 0;
   display: flex;
+  justify-content: center;
   gap: 15px;
   overflow: scroll;
   scrollbar-width: none; /* Firefox */
@@ -80,7 +104,12 @@ const BookZoneModal = ({ isModalOpen, closeModal, selectedZone }) => {
     <Modal isOpen={isModalOpen} onClose={closeModal}>
       <StyledBookZoneModal>
         <StyledBookZoneContent>
-          <StyledBookZoneTitle>Zone {selectedZone?.name}</StyledBookZoneTitle>
+          <StyledBookZoneTitle>
+            <StyledBookZoneId>
+              <span>{selectedZone?.id}</span>
+            </StyledBookZoneId>
+            <span>Zone</span> <span>{selectedZone?.name}</span>
+          </StyledBookZoneTitle>
           <StyledBookZoneSubtitle>
             This zone is right behind the DJ booth
           </StyledBookZoneSubtitle>
