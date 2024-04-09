@@ -17,6 +17,36 @@ const pulse = keyframes`
   }
 `;
 
+const rotateAnimation1 = keyframes`
+  0% {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+`;
+
+const rotateAnimation2 = keyframes`
+  0% {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(0);
+    opacity: 0;
+  }
+`;
+
 const StyledContainer = styled.main`
   padding: 25px 20px;
 `;
@@ -117,6 +147,83 @@ const StyledLegendIndicatorIcon = styled.a`
           rgba(0, 0, 0, 0) 100%
         );
       `}
+  }
+
+  .eclipse-1 {
+    position: relative;
+    z-index: -1;
+
+    &:after {
+      position: absolute;
+      content: "";
+      width: 10px;
+      height: 100px;
+      left: -10px;
+      top: -50px;
+      opacity: 0.6;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(217, 220, 125, 0.65) 0%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      transform-origin: center center;
+      animation: ${rotateAnimation1} 2s linear infinite;
+    }
+
+    &:before {
+      position: absolute;
+      content: "";
+      width: 100px;
+      height: 10px;
+      left: -50px;
+      top: 0;
+      opacity: 0.6;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(217, 220, 125, 0.65) 0%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      animation: ${rotateAnimation1} 2s linear infinite;
+    }
+  }
+
+  .eclipse-2 {
+    position: relative;
+    z-index: -1;
+
+    &:after {
+      position: absolute;
+      content: "";
+      width: 10px;
+      height: 100px;
+      left: -10px;
+      top: -50px;
+      opacity: 0.6;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(255, 94, 229, 0.65) 0%,
+        rgba(0, 0, 0, 0) 100%
+      );
+
+      animation: ${rotateAnimation2} 2s linear infinite;
+    }
+
+    &:before {
+      position: absolute;
+      content: "";
+      width: 100px;
+      height: 10px;
+      left: -50px;
+      top: 0;
+      opacity: 0.6;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(255, 94, 229, 0.65) 0%,
+        rgba(0, 0, 0, 0) 100%
+      );
+
+      animation: ${rotateAnimation2} 2s linear infinite;
+    }
   }
 `;
 
@@ -282,7 +389,6 @@ export default function Home() {
           <StyledLegendIndicatorIcon available={true} />
           <StyledLegendIndicatorLabel>Available</StyledLegendIndicatorLabel>
         </StyledLegendIndicator>
-
         <StyledLegendIndicator>
           <StyledLegendIndicatorIcon />
           <StyledLegendIndicatorLabel>Unavailable</StyledLegendIndicatorLabel>
@@ -312,6 +418,12 @@ export default function Home() {
                 name={zone?.name}
               >
                 {zone?.name === "DJ" && "DJ"}
+                {zone?.name === "DJ" && (
+                  <>
+                    <span className="eclipse-1"></span>
+                    <span className="eclipse-2"></span>
+                  </>
+                )}
               </StyledAnchor>
             );
           })}
